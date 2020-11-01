@@ -8,7 +8,8 @@
     <Product />
     <Company>Citruspress</Company>
     <RepositoryUrl>git@github.com:citruspress/flightsim-api.git</RepositoryUrl>
-    <Version>0.0.6</Version>
+    <Version>0.0.13</Version>
+	<NoWarn>NU5100</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,11 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="SimConnect.dll">
-      <Pack>true</Pack>
-      <PackagePath>lib\$(TargetFramework)</PackagePath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="SimConnect.dll" Pack="true" PackageCopyToOutput="true" PackagePath="contentFiles\any\any\" />
   </ItemGroup>
 
   <ItemGroup>
