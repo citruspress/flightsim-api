@@ -40,7 +40,7 @@ namespace FlightSimApi
                         {
                             RequestData();
                             _sim.ReceiveMessage();
-                            await Task.Delay(1);
+                            await Task.Delay(1000);
                         }
                     }
                     catch (Exception)
@@ -73,7 +73,7 @@ namespace FlightSimApi
                             if (valueAttribute == null)
                                 continue;
 
-                            simConnect.AddToDataDefinition(simConnectTypeAttribute.TypeDefinition, valueAttribute.StringName, null, SIMCONNECT_DATATYPE.STRING256, 0, SimConnect.SIMCONNECT_UNUSED);
+                            simConnect.AddToDataDefinition(simConnectTypeAttribute.TypeDefinition, valueAttribute.StringName, null, FieldTypeToSimConnectType(field.FieldType), 0, SimConnect.SIMCONNECT_UNUSED);
                         }
 
                         simConnect.RegisterDataDefineStruct<T>(simConnectTypeAttribute.TypeDefinition);
@@ -112,6 +112,17 @@ namespace FlightSimApi
         public void SendEvent(Enum eventId, uint data = 0)
         {
             _sim?.TransmitClientEvent(SimConnect.SIMCONNECT_OBJECT_ID_USER, eventId, data, Priority.SIMCONNECT_GROUP_PRIORITY_STANDARD, SIMCONNECT_EVENT_FLAG.GROUPID_IS_PRIORITY);
+        }
+
+        private static SIMCONNECT_DATATYPE FieldTypeToSimConnectType(Type type)
+        {
+            return Type.GetTypeCode(type) switch
+            {
+                TypeCode.Double => SIMCONNECT_DATATYPE.FLOAT64,
+                TypeCode.String => SIMCONNECT_DATATYPE.STRING256,
+                TypeCode.Int32 => SIMCONNECT_DATATYPE.INT32,
+                _ => SIMCONNECT_DATATYPE.INVALID,
+            };
         }
 
         private void Connect()

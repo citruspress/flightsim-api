@@ -8,15 +8,8 @@
     <Product />
     <Company>Citruspress</Company>
     <RepositoryUrl>git@github.com:citruspress/flightsim-api.git</RepositoryUrl>
-    <Version>0.0.4</Version>
+    <Version>0.0.6</Version>
   </PropertyGroup>
-
-  <ItemGroup>
-	  <None Include="lib\SimConnect.dll" Link="SimConnect.dll" CopyToOutputDirectory="PreserveNewest">
-		<Pack>true</Pack>
-		<PackagePath>lib\$(TargetFramework)</PackagePath>
-	  </None>
-  </ItemGroup>
 
   <ItemGroup>
 	<_PackageFiles Include="$(OutputPath)\Microsoft.FlightSimulator.SimConnect.dll">
@@ -26,17 +19,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="lib\Microsoft.FlightSimulator.SimConnect">
-	  <Pack>true</Pack>
-      <HintPath>lib\Microsoft.FlightSimulator.SimConnect.dll</HintPath>
-	  <IncludeAssets>lib\Microsoft.FlightSimulator.SimConnect.dll</IncludeAssets>
-    </Reference>
+    <None Update="SimConnect.dll">
+      <Pack>true</Pack>
+      <PackagePath>lib\$(TargetFramework)</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="lib\Microsoft.FlightSimulator.SimConnect.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Reference Include="Microsoft.FlightSimulator.SimConnect">
+      <HintPath>Microsoft.FlightSimulator.SimConnect.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
