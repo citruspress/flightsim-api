@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Citruspress</Authors>
+    <Product />
+    <Company>Citruspress</Company>
+    <RepositoryUrl>git@github.com:citruspress/flightsim-api.git</RepositoryUrl>
+    <Version>0.0.4</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <None Include="lib\SimConnect.dll" Link="SimConnect.dll" CopyToOutputDirectory="PreserveNewest">
+		<Pack>true</Pack>
+		<PackagePath>lib\$(TargetFramework)</PackagePath>
+	  </None>
+  </ItemGroup>
+
+  <ItemGroup>
+	<_PackageFiles Include="$(OutputPath)\Microsoft.FlightSimulator.SimConnect.dll">
+	  <BuildAction>None</BuildAction>
+	  <PackagePath>lib\$(TargetFramework)</PackagePath>
+	</_PackageFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="lib\Microsoft.FlightSimulator.SimConnect">
+	  <Pack>true</Pack>
+      <HintPath>lib\Microsoft.FlightSimulator.SimConnect.dll</HintPath>
+	  <IncludeAssets>lib\Microsoft.FlightSimulator.SimConnect.dll</IncludeAssets>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="lib\Microsoft.FlightSimulator.SimConnect.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
