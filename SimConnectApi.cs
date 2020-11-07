@@ -20,6 +20,7 @@ namespace FlightSimApi
 
         private SimConnect _sim;
         private readonly ConcurrentDictionary<Type, ValueType> _values = new ConcurrentDictionary<Type, ValueType>();
+        private readonly ConcurrentDictionary<Type, Action<ValueType>> _handlers = new ConcurrentDictionary<Type, Action<ValueType>>();
         private RegisteredType[] _registeredTypes = new RegisteredType[0];
         private List<Action<SimConnect>> _registeredEvents = new List<Action<SimConnect>>();
         private readonly Task _connectTask;
@@ -114,6 +115,12 @@ namespace FlightSimApi
             _sim?.TransmitClientEvent(SimConnect.SIMCONNECT_OBJECT_ID_USER, eventId, data, Priority.SIMCONNECT_GROUP_PRIORITY_STANDARD, SIMCONNECT_EVENT_FLAG.GROUPID_IS_PRIORITY);
         }
 
+        public void RegisterHandler<T>(Action<T> handler) where T : struct
+        {
+            var simConnectTypeAttribute = typeof(T).GetCustomAttribute<SimConnectTypeAttribute>();
+            _handlers[typeof(T)] = new Action<ValueType>(valueType => handler((T)valueType));
+        }
+
         private static SIMCONNECT_DATATYPE FieldTypeToSimConnectType(Type type)
         {
             return Type.GetTypeCode(type) switch
@@ -159,6 +166,10 @@ namespace FlightSimApi
         private void Sim_OnRecvSimobjectDataBytype(SimConnect sender, SIMCONNECT_RECV_SIMOBJECT_DATA_BYTYPE data)
         {
             _values[data.dwData[0].GetType()] = (ValueType)data.dwData[0];
+            if (_handlers.TryGetValue(data.dwData[0].GetType(), out var handler))
+            {
+                handler.Invoke((ValueType)data.dwData[0]);
+            }
         }
 
         private void Sim_OnRecvQuit(SimConnect sender, SIMCONNECT_RECV data)
