@@ -73,7 +73,7 @@ namespace FlightSimApi
                             if (valueAttribute == null)
                                 continue;
 
-                            simConnect.AddToDataDefinition(simConnectTypeAttribute.TypeDefinition, valueAttribute.StringName, null, FieldTypeToSimConnectType(field.FieldType), 0, SimConnect.SIMCONNECT_UNUSED);
+                            simConnect.AddToDataDefinition(simConnectTypeAttribute.TypeDefinition, valueAttribute.StringName, valueAttribute.UnitName, FieldTypeToSimConnectType(field.FieldType), 0, SimConnect.SIMCONNECT_UNUSED);
                         }
 
                         simConnect.RegisterDataDefineStruct<T>(simConnectTypeAttribute.TypeDefinition);
