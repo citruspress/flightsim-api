@@ -26,6 +26,6 @@ jobs:
         VERSION_REGEX: '^\s*<Version>(.*)<\/Version>\s*$'
         TAG_FORMAT: '*'
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-        NUGET_SOURCE: https://nuget.pkg.github.com/citruspress/index.json
+        NUGET_SOURCE: https://nuget.pkg.github.com/citruspress
     env:
       GITHUB_TOKEN: ${{ secrets.NUGET_API_KEY }}
