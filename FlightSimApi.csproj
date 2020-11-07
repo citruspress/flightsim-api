@@ -8,7 +8,7 @@
     <Product />
     <Company>Citruspress</Company>
     <RepositoryUrl>git@github.com:citruspress/flightsim-api.git</RepositoryUrl>
-    <Version>0.0.14</Version>
+    <Version>0.0.15</Version>
     <NoWarn>NU5100</NoWarn>
   </PropertyGroup>
 
